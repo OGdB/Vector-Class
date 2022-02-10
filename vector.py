@@ -182,8 +182,8 @@ class Vector3(Vector):
         self[2] = new_z
 
 
-# Your Name - Oeds de Boer
-# ETGG 1803 Lab #3
+# Your Name - Oeds G. de Boer
+# ETGG 1803-01 Lab #3
 # Date Completed - 2/10/2022
 # Outside Resources - None
 # All your code goes here 
