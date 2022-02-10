@@ -1,4 +1,5 @@
 def is_valid_number(value):
+    """Return whether the input can be converted to a float"""
     if isinstance(value, float) or isinstance(value, int):
         return True
 
@@ -9,9 +10,10 @@ def is_valid_number(value):
         except ValueError:
             raise ValueError("Entered value is not a number!")
 
-    raise TypeError("Only floats and integers allowed")  #
+    raise TypeError("Only floats and integers allowed") 
 
 def to_float(new_value):
+    """Return the value as a float, if possible"""
     if is_valid_number(new_value):
         return float(new_value)
 
@@ -19,6 +21,7 @@ class Vector:
     def __init__(self, *args):  # *args == arbitrary length
         self.data = []
 
+        # If argument is a list of values, (try to) add each value.
         for arg in args:
             if isinstance(arg, list):
                 for value in arg:
@@ -39,6 +42,7 @@ class Vector:
         self.dim = len(self.data)
 
     def __str__(self):
+        """Return a string of the vector in the form of '<Vector#: x, y, z, p>: '"""
         data_string = ""
         for i in range(len(self.data)):
             dimension_value = self.data[i]
@@ -51,6 +55,7 @@ class Vector:
 
 
     def __len__(self):
+        """Return the amount of dimensions of this vector"""
         return self.dim
 
     # iv.
@@ -60,7 +65,8 @@ class Vector:
     def __setitem__(self, key, value):
         self.data[key] = to_float(value)
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other):
+        """Return whether this vector has the same values as the other"""
         if self.dim == other.dim:
             for v in range(len(self)):
                 if self[v] != other[v]:
@@ -71,6 +77,7 @@ class Vector:
         return True
 
     def copy(self):
+        """Return deep copy of this vector"""
         deep_copy = Vector(self.data)
 
         return deep_copy
@@ -85,10 +92,16 @@ class Vector:
         return self * other
 
     def __add__(self, other):
-        rv = self.copy()
-        for i in range(len(rv.data)):
-            rv[i] = float(rv[i] + other[i])
-        return rv
+        if isinstance(other, type(self)):
+            rv = self.copy()
+            for i in range(len(rv.data)):
+                rv[i] = float(rv[i] + other[i])
+            return rv
+        else:
+            raise TypeError(f"You can only add another Vector{self.dim} to this Vector{self.dim}. (You passed {other}).")  #
+            # TypeError: You can only add another 
+    # Vector3 to this Vector3 (You passed
+    # '5'.)
 
     def __sub__(self, other):
         rv = self.copy()
@@ -156,6 +169,38 @@ class Vector3(Vector):
         self[2] = new_z
 
 
-v1 = Vector3(10, 20, 30)
+# Your Name - Oeds de Boer
+# ETGG 1803 Lab #3
+# Date Completed - 2/10/2022
+# Outside Resources - None
+# All your code goes here 
 
-v2 = v1.copy()
+if __name__ == "__main__": 
+    a = Vector(1, 2, 3, 4)
+    v = Vector(1, 2, 3)
+    w = Vector(4, 5, 6)
+    z = v + w
+    print(a) # <Vector4: 1.0, 2.0, 3.0, 4.0>
+    print(z) # <Vector3: 5.0, 7.0, 9.0>
+    print("v + 5 =", v + 5) # TypeError: You can only add another 
+    # Vector3 to this Vector3 (You passed
+    # '5'.)
+    q = v - w
+    print(q) # <Vector3: -3.0, -3.0, -3.0>
+    a = v * -2
+    print(a) # <Vector3: -2.0, -4.0, -6.0>
+    a = -2 * v
+    print(a) # <Vector3: -2.0, -4.0, -6.0>
+    b = a + (v + w)
+    print(b) # <Vector3: 3.0, 3.0, 3.0>
+    d = v + (v + v) + w
+    print(d) # <Vector3: 7.0, 11.0, 15.0>
+    n = -v
+    print(n) # <Vector3: -1.0, -2.0, -3.0>
+    s = Vector2(3, -2)
+    print(s) # <Vector2: 3.0, -2.0)
+    print(s.x) # 3.0
+    t = Vector(3, -2)
+    print(t) # <Vector2: 3.0, -2.0>
+    print(t.y) # -2.0
+    print(s == t) # True
