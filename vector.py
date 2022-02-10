@@ -92,12 +92,12 @@ class Vector:
         return self * other
 
     def __add__(self, other):
-        if isinstance(other, type(self)):
+        try:
             rv = self.copy()
             for i in range(len(rv.data)):
                 rv[i] = float(rv[i] + other[i])
             return rv
-        else:
+        except:
             raise TypeError(f"You can only add another Vector{self.dim} to this Vector{self.dim}. (You passed {other}).")  #
             # TypeError: You can only add another 
     # Vector3 to this Vector3 (You passed
@@ -182,9 +182,7 @@ if __name__ == "__main__":
     z = v + w
     print(a) # <Vector4: 1.0, 2.0, 3.0, 4.0>
     print(z) # <Vector3: 5.0, 7.0, 9.0>
-    print("v + 5 =", v + 5) # TypeError: You can only add another 
-    # Vector3 to this Vector3 (You passed
-    # '5'.)
+    ###### print("v + 5 =", v + 5) # TypeError: You can only add another Vector3 to this Vector3 (You passed '5'.)
     q = v - w
     print(q) # <Vector3: -3.0, -3.0, -3.0>
     a = v * -2
