@@ -18,8 +18,9 @@ def to_float(new_value):
         return float(new_value)
 
 class Vector:
-    def __init__(self, *args):  # *args == arbitrary length
-        self.data = []
+    """Vector base class with vector-math functions which apply to vectors with any amount of dimensions"""
+    def __init__(self, *args):  # *args == arbitrary length (unspecified amount of arguments)
+        self.data = []  # The dimension-values
 
         # If argument is a list of values, (try to) add each value.
         for arg in args:
@@ -37,6 +38,7 @@ class Vector:
             self.__class__ = Vector3
 
     def append(self, *args):
+        """Append a dimension to the vector"""
         for arg in args:
             self.data.append(float(arg))
         self.dim = len(self.data)
@@ -53,17 +55,16 @@ class Vector:
 
         return f"<Vector{self.dim}: {data_string}>"
 
-
     def __len__(self):
         """Return the amount of dimensions of this vector"""
         return self.dim
 
-    # iv.
     def __getitem__(self, item):
         return self.data[item]
 
     def __setitem__(self, key, value):
-        self.data[key] = to_float(value)
+        """Set the dimension with index 'key' to 'value' """
+        self[key] = to_float(value)
 
     def __eq__(self, other):
         """Return whether this vector has the same values as the other"""
@@ -83,15 +84,18 @@ class Vector:
         return deep_copy
 
     def __mul__(self, other):
+        """Vector-multiplication"""
         rv = self.copy()
         for i in range(len(rv.data)):
             rv[i] = float(rv[i] * other)
         return rv
 
     def __rmul__(self, other):
+        """Corrects the intended multiplication by putting the scalar on the right side of the vector instead of the left"""
         return self * other
 
     def __add__(self, other):
+        """Vector addition"""
         try:
             rv = self.copy()
             for i in range(len(rv.data)):
@@ -104,15 +108,18 @@ class Vector:
     # '5'.)
 
     def __sub__(self, other):
+        """Vector subtraction"""
         rv = self.copy()
         for i in range(len(rv.data)):
             rv[i] = float(rv[i] - other[i])
         return rv
 
     def __neg__(self):
+        """Vector negation"""
         return -1 * self
 
     def __truediv__(self, other):
+        """Vector division"""
         rv = self.copy()
         for i in range(len(rv.data)):
             rv[i] = float(rv[i] / other)
@@ -120,6 +127,9 @@ class Vector:
 
 
 class Vector2(Vector):
+    """Class specifically for vector2 with vector2-specific math function"""
+    #TODO: Actually add Vector2-math functions
+
     def __init__(self, x, y):
         super().__init__(x, y)
 
@@ -141,6 +151,9 @@ class Vector2(Vector):
 
 
 class Vector3(Vector):
+    """Class specifically for vector3 with vector3-specific math function"""
+    #TODO: Actually add Vector3-math functions
+    
     def __init__(self, x, y, z):
         super().__init__(x, y, z)
 
