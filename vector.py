@@ -1,4 +1,4 @@
-def is_number(value):
+def is_valid_number(value):
     if isinstance(value, float) or isinstance(value, int):
         return True
 
@@ -11,12 +11,15 @@ def is_number(value):
 
     raise TypeError("Only floats and integers allowed")  #
 
+def to_float(new_value):
+    if is_valid_number(new_value):
+        return float(new_value)
+
 class Vector:
     def __init__(self, *args):  # *args == arbitrary length
         self.data = []
         for arg in args:
-            if is_number(arg):
-                self.data.append(float(arg))
+            self.data.append(to_float(arg))
         self.dim = len(self.data)
 
         if self.dim == 2:
@@ -32,14 +35,13 @@ class Vector:
     def __str__(self):
         data_string = ""
         for i in range(len(self.data)):
-            d_str = self.data[i]
-            data_string = data_string + str(d_str)
+            dimension_value = self.data[i]
+            data_string = data_string + str(dimension_value)
 
             if i + 1 is not len(self.data):
                 data_string += ", "
 
         return f"<Vector{self.dim}: {data_string}>"
-
 
 
     def __len__(self):
@@ -50,7 +52,7 @@ class Vector:
         return self.data[item]
 
     def __setitem__(self, key, value):
-        self.data[key] = float(value)
+        self.data[key] = to_float(value)
 
     def __eq__(self, other) -> bool:
         if self.dim == other.dim:
@@ -110,8 +112,7 @@ class Vector2(Vector):
 
     @x.setter
     def x(self, new_x):
-        if is_number(new_x):
-            self[0] = new_x
+        self[0] = new_x
 
     @property
     def y(self):
@@ -119,8 +120,7 @@ class Vector2(Vector):
 
     @y.setter
     def y(self, new_y):
-        if is_number(new_y):
-            self[1] = new_y
+        self[1] = new_y
 
 
 class Vector3(Vector):
@@ -133,8 +133,7 @@ class Vector3(Vector):
 
     @x.setter
     def x(self, new_x):
-        if is_number(new_x):
-            self[0] = new_x
+        self[0] = new_x
 
     @property
     def y(self):
@@ -142,8 +141,7 @@ class Vector3(Vector):
 
     @y.setter
     def y(self, new_y):
-        if is_number(new_y):
-            self[1] = float(new_y)
+        self[1] = new_y
 
     @property
     def z(self):
@@ -151,13 +149,9 @@ class Vector3(Vector):
 
     @z.setter
     def z(self, new_z):
-        if is_number(new_z):
-            self[2] = float(new_z)
+        self[2] = new_z
 
 
 v1 = Vector3(10, 20, 30)
-v1.x = 69
-
-string_int = is_number("abc")
-string_int = float(string_int)
-print(string_int)
+v1.x = "69"
+print(v1)
