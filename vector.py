@@ -18,8 +18,14 @@ def to_float(new_value):
 class Vector:
     def __init__(self, *args):  # *args == arbitrary length
         self.data = []
+
         for arg in args:
-            self.data.append(to_float(arg))
+            if isinstance(arg, list):
+                for value in arg:
+                    self.data.append(to_float(value))
+            else:
+                self.data.append(to_float(arg))
+
         self.dim = len(self.data)
 
         if self.dim == 2:
@@ -65,9 +71,7 @@ class Vector:
         return True
 
     def copy(self):
-        deep_copy = Vector()
-        for v in self.data:
-            deep_copy.append(v)
+        deep_copy = Vector(self.data)
 
         return deep_copy
 
@@ -153,5 +157,5 @@ class Vector3(Vector):
 
 
 v1 = Vector3(10, 20, 30)
-v1.x = "69"
-print(v1)
+
+v2 = v1.copy()
