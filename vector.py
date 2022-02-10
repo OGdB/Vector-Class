@@ -64,7 +64,7 @@ class Vector:
 
     def __setitem__(self, key, value):
         """Set the dimension with index 'key' to 'value' """
-        self[key] = to_float(value)
+        self.data[key] = to_float(value)
 
     def __eq__(self, other):
         """Return whether this vector has the same values as the other"""
@@ -101,7 +101,7 @@ class Vector:
             for i in range(len(rv.data)):
                 rv[i] = float(rv[i] + other[i])
             return rv
-        except:
+        except TypeError:
             raise TypeError(f"You can only add another Vector{self.dim} to this Vector{self.dim}. (You passed {other}).")  #
             # TypeError: You can only add another 
     # Vector3 to this Vector3 (You passed
